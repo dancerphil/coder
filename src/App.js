@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import AceEditor from 'react-ace';
-import 'brace/mode/javascript';
-import 'brace/snippets/javascript';
-import 'brace/theme/monokai';
-// todo try move
-import 'brace/ext/language_tools';
-import 'brace/ext/searchbox';
+import Editor from './Editor'
 
 class App extends Component {
   state = {
@@ -39,33 +33,19 @@ class App extends Component {
     this.setState({ code: value });
   }
   render() {
+    const height = 160;
     return (
-      <div style={{ width: '100%', height: '100%', color: 'white' }} onClick={this.handleClick}>
-        <AceEditor
-          style={{ height: 'calc(100vh - 160px)', width: '100%' }}
-          mode="javascript"
-          theme="monokai"
-          name="coder"
-          onLoad={this.onLoad}
+      <div style={{ width: '100%', height: '100%', color: '#f8f8f2' }} onClick={this.handleClick}>
+        <Editor
+          style={{ height: `calc(100vh - ${20 + height}px)`, width: '100%' }}
           onChange={this.onChange}
-          onSelectionChange={this.onSelectionChange}
-          onCursorChange={this.onCursorChange}
-          onValidate={this.onValidate}
-          value={this.state.code}
-          fontSize={14}
-          showPrintMargin
-          showGutter
-          highlightActiveLine
-          setOptions={{
-            enableBasicAutocompletion: true,
-            enableLiveAutocompletion: true,
-            enableSnippets: true,
-            showLineNumbers: true,
-            tabSize: 2,
-          }}
+          code={this.state.code}
         />
-        <div style={{ height: '160px', overflow: 'auto', padding: '0 16px' }} >
-          <pre>{this.state.output}</pre>
+        <div style={{ height: '20px', fontSize: '12px', cursor: 'row-resize', background: '#333333' }}>
+          <span style={{ marginLeft: '10px', color: '#909090' }}>Console</span>
+        </div>
+        <div style={{ height: `${160}px`, overflow: 'auto', padding: '0 16px', background: '#272922' }} >
+          <pre style={{ margin: 0 }}>{this.state.output}</pre>
         </div>
       </div>
     );
