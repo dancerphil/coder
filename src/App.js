@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Editor from './Editor'
+import Editor from './Editor';
+import FeatureList from './FeatureList';
 
 class App extends Component {
   state = {
@@ -62,7 +63,7 @@ class App extends Component {
   }
   render() {
     const { height, mouseDown } = this.state.consoleState;
-    const editorStyle = { height: `calc(100vh - ${20 + height}px)`, width: '100%' };
+    const editorStyle = { height: `calc(100vh - ${20 + height}px)`, width: '100%', background: '#272922'  };
     let editor = (
       <Editor
         style={editorStyle}
@@ -91,6 +92,7 @@ class App extends Component {
         <div style={{ height: `${height}px`, overflow: 'auto', padding: '0 16px', background: '#272922' }} >
           <pre style={{ margin: 0 }}>{this.state.output}</pre>
         </div>
+        <FeatureList />
       </div>
     );
   }

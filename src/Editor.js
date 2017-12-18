@@ -3,8 +3,8 @@ import AceEditor from 'react-ace';
 import 'brace/mode/javascript';
 import 'brace/snippets/javascript';
 import 'brace/theme/monokai';
-// todo try move
 import 'brace/ext/language_tools';
+// todo try move
 import 'brace/ext/searchbox';
 
 class Editor extends Component {
