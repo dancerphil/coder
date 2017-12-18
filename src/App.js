@@ -61,7 +61,18 @@ class App extends Component {
     this.forceUpdate();
   }
   render() {
-    const { height } = this.state.consoleState;
+    const { height, mouseDown } = this.state.consoleState;
+    const editorStyle = { height: `calc(100vh - ${20 + height}px)`, width: '100%' };
+    let editor = (
+      <Editor
+        style={editorStyle}
+        onChange={this.onTextChange}
+        code={this.state.code}
+      />
+    );
+    if (mouseDown) {
+      editor = <div style={editorStyle} />;
+    }
     return (
       <div
         style={{ width: '100%', height: '100%', color: '#f8f8f2' }}
@@ -70,11 +81,7 @@ class App extends Component {
         onMouseMove={this.handleMouseMove}
         onMouseUp={this.handleMouseUp}
       >
-        <Editor
-          style={{ height: `calc(100vh - ${20 + height}px)`, width: '100%' }}
-          onChange={this.onTextChange}
-          code={this.state.code}
-        />
+        {editor}
         <div
           id={'resize'}
           style={{ height: '20px', fontSize: '12px', cursor: 'row-resize', background: '#333333' }}
