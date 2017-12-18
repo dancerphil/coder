@@ -2,15 +2,30 @@ import React, { Component } from 'react';
 import Editor from './Editor';
 import FeatureList from './FeatureList';
 
-class App extends Component {
-  state = {
-    code: '',
-    output: '',
-    consoleState: {
-      height: 160,
-      mouseDown: false,
+const defaultState = {
+  code: '',
+  output: '',
+  consoleState: {
+    height: 160,
+    mouseDown: false,
+  }
+};
+
+const getLocalStorageState = () => {
+  let localStorageState = defaultState;
+  const state = localStorage['dancerphil_coder']
+  if (state) {
+    try {
+      localStorageState = JSON.parse(state);
+    } catch (e) {
+      localStorageState = defaultState;
     }
   }
+  return localStorageState;
+}
+
+class App extends Component {
+  state = defaultState
   componentDidMount() {
     const defaultLog = console.log;
     const that = this;
@@ -23,6 +38,11 @@ class App extends Component {
       componentLog(...arguments);
       defaultLog(...arguments);
     };
+    const localStorageState = getLocalStorageState();
+    this.setState(localStorageState);
+  }
+  componentDidUpdate() {
+    localStorage['dancerphil_coder'] = JSON.stringify(this.state);
   }
   handleClick = () => {
     this.state.output = '';
@@ -32,7 +52,7 @@ class App extends Component {
     } catch (e) {
       console.log(e)
     }
-    this.forceUpdate()
+    this.forceUpdate();
   }
   onTextChange = (value) => {
     this.setState({ code: value });
