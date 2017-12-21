@@ -5,13 +5,16 @@ import Checkbox from 'antd/lib/checkbox';
 import 'antd/lib/checkbox/style/css';
 
 class FeatureList extends Component {
-  state = {
-    visible: true
-  }
-  handleClose = (e) => {
-    this.setState({
-      visible: false,
-    });
+  constructor() {
+    super();
+    this.state = {
+      visible: true,
+    };
+    this.handleClose = () => {
+      this.setState({
+        visible: false,
+      });
+    };
   }
   render() {
     return (
@@ -21,9 +24,9 @@ class FeatureList extends Component {
         onOk={this.handleClose}
         onCancel={this.handleClose}
       >
-        <Checkbox checked={true}>JavaScript 语法高亮与自动提示</Checkbox><br />
-        <Checkbox checked={true}>JavaScript 运行结果</Checkbox><br />
-        <Checkbox checked={true}>本地代码保存</Checkbox><br />
+        <Checkbox checked>JavaScript 语法高亮与自动提示</Checkbox><br />
+        <Checkbox checked>JavaScript 运行结果</Checkbox><br />
+        <Checkbox checked>本地代码保存</Checkbox><br />
         <Checkbox checked={false}>多文件</Checkbox><br />
         <Checkbox checked={false}>Chrome 多设备代码同步</Checkbox><br />
         <Checkbox checked={false}>Python 支持</Checkbox><br />
