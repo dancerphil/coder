@@ -9,7 +9,6 @@ class FeatureList extends Component {
     visible: true
   }
   handleClose = (e) => {
-    console.log(e);
     this.setState({
       visible: false,
     });
