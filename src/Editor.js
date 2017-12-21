@@ -21,13 +21,7 @@ class Editor extends Component {
         showPrintMargin
         showGutter
         highlightActiveLine
-        setOptions={{
-          enableBasicAutocompletion: true,
-          enableLiveAutocompletion: true,
-          enableSnippets: true,
-          showLineNumbers: true,
-          tabSize: 2,
-        }}
+        setOptions={{ enableBasicAutocompletion: true, enableLiveAutocompletion: true, enableSnippets: true, showLineNumbers: true, tabSize: 2 }}
       />
     );
   }

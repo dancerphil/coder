@@ -7,13 +7,9 @@ import 'antd/lib/checkbox/style/css';
 class FeatureList extends Component {
   constructor() {
     super();
-    this.state = {
-      visible: true,
-    };
+    this.state = { visible: true };
     this.handleClose = () => {
-      this.setState({
-        visible: false,
-      });
+      this.setState({ visible: false });
     };
   }
   render() {

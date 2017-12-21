@@ -2,96 +2,16 @@ import React, { Component } from 'react';
 import Editor from './Editor';
 import FeatureList from './FeatureList';
 
-const defaultState = {
-  code: '',
-  output: '',
-  consoleState: {
-    height: 160,
-    mouseDown: false,
-  },
-};
-
-const getLocalStorageState = () => {
-  let localStorageState = defaultState;
-  const state = localStorage.dancerphil_coder;
-  if (state) {
-    try {
-      localStorageState = JSON.parse(state);
-    } catch (e) {
-      localStorageState = defaultState;
-    }
-  }
-  return localStorageState;
-};
-
 class App extends Component {
-  constructor() {
-    super();
-    this.state = defaultState;
-    this.handleClick = () => {
-      this.state.output = '';
-      const { code } = this.state;
-      try {
-        eval(code);
-      } catch (e) {
-        console.log(e);
-      }
-      this.forceUpdate();
-    };
-    this.handleTextChange = (value) => {
-      this.setState({ code: value });
-    };
-    this.handleMouseDown = (e) => {
-      if (e.target.id === 'resize') {
-        this.preY = e.clientY;
-        this.state.consoleState.mouseDown = true;
-      }
-    };
-    this.handleMouseMove = (e) => {
-      const { consoleState } = this.state;
-      if (consoleState.mouseDown) {
-        const dy = this.preY - e.clientY;
-        this.preY = e.clientY;
-        consoleState.height += dy;
-        if (consoleState.height < 0) {
-          consoleState.height = 0;
-          consoleState.mouseDown = false;
-        }
-        this.forceUpdate();
-      }
-    };
-    this.handleMouseUp = () => {
-      const { consoleState } = this.state;
-      consoleState.mouseDown = false;
-      this.forceUpdate();
-    };
-  }
-  componentDidMount() {
-    const defaultLog = console.log;
-    const that = this;
-    const componentLog = function componentLog() {
-      let args = Array.prototype.slice.call(arguments);
-      args = args.join(' ');
-      that.state.output = `${that.state.output + args}\n`;
-    };
-    console.log = function log() {
-      componentLog(...arguments);
-      defaultLog(...arguments);
-    };
-    const localStorageState = getLocalStorageState();
-    this.setState(localStorageState);
-  }
-  componentDidUpdate() {
-    localStorage.dancerphil_coder = JSON.stringify(this.state);
-  }
   render() {
-    const { height, mouseDown } = this.state.consoleState;
+    const { consoleState, code, output, handleClick, handleTextChange, handleMouseDown, handleMouseMove, handleMouseUp } = this.props;
+    const { height, mouseDown } = consoleState;
     const editorStyle = { height: `calc(100vh - ${20 + height}px)`, width: '100%', background: '#272922' };
     let editor = (
       <Editor
         style={editorStyle}
-        onChange={this.handleTextChange}
-        code={this.state.code}
+        onChange={handleTextChange}
+        code={code}
       />
     );
     if (mouseDown) {
@@ -100,25 +20,20 @@ class App extends Component {
     return (
       <div
         style={{ width: '100%', height: '100%', color: '#f8f8f2' }}
-        onClick={this.handleClick}
-        onMouseDown={this.handleMouseDown}
-        onMouseMove={this.handleMouseMove}
-        onMouseUp={this.handleMouseUp}
+        onClick={handleClick}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
       >
         {editor}
         <div
           id="resize"
-          style={{
- height: '20px', fontSize: '12px', cursor: 'row-resize', background: '#333333',
-}}
+          style={{ height: '20px', fontSize: '12px', cursor: 'row-resize', background: '#333333' }}
         >
           <span style={{ marginLeft: '10px', color: '#909090' }}>Console</span>
         </div>
-        <div style={{
- height: `${height}px`, overflow: 'auto', padding: '0 16px', background: '#272922',
-}}
-        >
-          <pre style={{ margin: 0 }}>{this.state.output}</pre>
+        <div style={{ height: `${height}px`, overflow: 'auto', padding: '0 16px', background: '#272922' }}>
+          <pre style={{ margin: 0 }}>{output}</pre>
         </div>
         <FeatureList />
       </div>
