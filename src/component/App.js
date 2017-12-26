@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Editor from './Editor';
 import FeatureList from './FeatureList';
+import Console from './Console';
+import Header from './Header';
 
 class App extends Component {
   render() {
@@ -26,16 +28,9 @@ class App extends Component {
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
       >
+        <Header files={files} active={active} />
         {editor}
-        <div
-          id="resize"
-          style={{ height: '20px', fontSize: '12px', cursor: 'row-resize', background: '#333333' }}
-        >
-          <span style={{ marginLeft: '10px', color: '#909090' }}>Console</span>
-        </div>
-        <div style={{ height: `${height}px`, overflow: 'auto', padding: '0 16px', background: '#272922' }}>
-          <pre style={{ margin: 0 }}>{output}</pre>
-        </div>
+        <Console height={height} output={output} />
         <FeatureList />
       </div>
     );
