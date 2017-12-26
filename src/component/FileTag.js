@@ -4,7 +4,7 @@ import 'antd/lib/tag/style/css';
 
 class FileTag extends Component {
   render() {
-    const { active, children, plus } = this.props;
+    const { active, children, plus, onClick, onClose } = this.props;
     const style = { borderRadius: 0, marginRight: 0, border: 0, lineHeight: '22px' };
     if (active) {
       return (
@@ -12,6 +12,7 @@ class FileTag extends Component {
           closable
           color="#666666"
           style={style}
+          onClose={onClose}
         >
           {children}
         </Tag>
@@ -20,9 +21,9 @@ class FileTag extends Component {
     if (plus) {
       return (
         <Tag
-          closable={!plus}
           color="#333333"
           style={Object.assign(style, { color: '#888888' })}
+          onClick={onClick}
         >
           {'+ new File'}
         </Tag>
@@ -33,6 +34,8 @@ class FileTag extends Component {
         closable
         color="#333333"
         style={Object.assign(style, { borderRight: '1px #666666 solid' })}
+        onClick={onClick}
+        onClose={onClose}
       >
         {children}
       </Tag>

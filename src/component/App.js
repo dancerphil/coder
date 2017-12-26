@@ -6,7 +6,8 @@ import Header from './Header';
 
 class App extends Component {
   render() {
-    const { consoleState, files, active, output, handleClick, handleTextChange, handleMouseDown, handleMouseMove, handleMouseUp } = this.props;
+    const { consoleState, files, active, output,
+      handleClick, handleTextChange, handleMouseDown, handleMouseMove, handleMouseUp, handleFileNew, handleFileSelect, handleFileDelete } = this.props;
     const { height, mouseDown } = consoleState;
     const { code } = files[active];
     // Header 22px, Console 20px + height, Editor rest
@@ -29,7 +30,13 @@ class App extends Component {
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
       >
-        <Header files={files} active={active} />
+        <Header
+          files={files}
+          active={active}
+          handleFileNew={handleFileNew}
+          handleFileSelect={handleFileSelect}
+          handleFileDelete={handleFileDelete}
+        />
         {editor}
         <Console height={height} output={output} />
         <FeatureList />

@@ -4,6 +4,7 @@ module.exports = {
     "no-eval": 0, // depends on eval
     "react/prop-types": 0, // prop-types is evil
     "react/prefer-stateless-function": 0, // flexible project should not use this rule
+    "react/no-array-index-key": 0,
     "object-curly-newline": 0,
     "max-len": 0,
     "max-lines": [2, {"max": 100}],

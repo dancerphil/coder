@@ -7,45 +7,66 @@ class Store extends Component {
   constructor() {
     super();
     this.state = defaultState;
-    this.handleClick = () => {
-      this.state.output = '';
-      const { files, active } = this.state;
-      const { code } = files[active];
-      try {
-        eval(code);
-      } catch (e) {
-        console.log(e);
-      }
-      this.forceUpdate();
-    };
-    this.handleTextChange = (value) => {
-      const { active, files } = this.state;
-      files[active].code = value;
-      this.forceUpdate();
-    };
-    this.handleMouseDown = (e) => {
-      if (e.target.id === 'resize') {
-        this.preY = e.clientY;
-        this.state.consoleState.mouseDown = true;
-      }
-    };
-    this.handleMouseMove = (e) => {
-      const { consoleState } = this.state;
-      if (consoleState.mouseDown) {
-        const dy = this.preY - e.clientY;
-        this.preY = e.clientY;
-        consoleState.height += dy;
-        if (consoleState.height < 0) {
-          consoleState.height = 0;
-          consoleState.mouseDown = false;
+    this.handles = {
+      handleClick: () => {
+        this.state.output = '';
+        const { files, active } = this.state;
+        const { code } = files[active];
+        try {
+          eval(code);
+        } catch (e) {
+          console.log(e);
         }
         this.forceUpdate();
-      }
-    };
-    this.handleMouseUp = () => {
-      const { consoleState } = this.state;
-      consoleState.mouseDown = false;
-      this.forceUpdate();
+      },
+      handleTextChange: (value) => {
+        const { active, files } = this.state;
+        files[active].code = value;
+        this.forceUpdate();
+      },
+      handleMouseDown: (e) => {
+        if (e.target.id === 'resize') {
+          this.preY = e.clientY;
+          this.state.consoleState.mouseDown = true;
+        }
+      },
+      handleMouseMove: (e) => {
+        const { consoleState } = this.state;
+        if (consoleState.mouseDown) {
+          const dy = this.preY - e.clientY;
+          this.preY = e.clientY;
+          consoleState.height += dy;
+          if (consoleState.height < 0) {
+            consoleState.height = 0;
+            consoleState.mouseDown = false;
+          }
+          this.forceUpdate();
+        }
+      },
+      handleMouseUp: () => {
+        const { consoleState } = this.state;
+        consoleState.mouseDown = false;
+        this.forceUpdate();
+      },
+      handleFileNew: (name) => {
+        this.state.files.push({
+          name,
+          code: '',
+        });
+        this.state.active = this.state.files.length - 1;
+        this.forceUpdate();
+      },
+      handleFileSelect: index => () => {
+        this.state.active = index;
+        this.forceUpdate();
+      },
+      handleFileDelete: (index) => {
+        if (this.state.files.length > 1) {
+          this.state.files.splice(index, 1);
+          this.state.active = 0;
+          this.forceUpdate();
+        }
+      },
     };
   }
   componentDidMount() {
@@ -68,11 +89,7 @@ class Store extends Component {
   render() {
     return (
       <App
-        handleTextChange={this.handleTextChange}
-        handleClick={this.handleClick}
-        handleMouseDown={this.handleMouseDown}
-        handleMouseMove={this.handleMouseMove}
-        handleMouseUp={this.handleMouseUp}
+        {...this.handles}
         {...this.state}
       />
     );

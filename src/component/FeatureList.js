@@ -23,7 +23,7 @@ class FeatureList extends Component {
         <Checkbox checked>JavaScript 语法高亮与自动提示</Checkbox><br />
         <Checkbox checked>JavaScript 运行结果</Checkbox><br />
         <Checkbox checked>本地代码保存</Checkbox><br />
-        <Checkbox checked={false}>多文件</Checkbox><br />
+        <Checkbox checked>多文件</Checkbox><br />
         <Checkbox checked={false}>CodePen & JsFiddle</Checkbox><br />
         <Checkbox checked={false}>下载离线版本</Checkbox><br />
         <Checkbox checked={false}>Python 支持</Checkbox><br />
