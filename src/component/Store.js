@@ -1,23 +1,7 @@
 import React, { Component } from 'react';
 import App from './App';
-
-const defaultState = { code: '',
-  output: '',
-  consoleState: { height: 160,
-    mouseDown: false } };
-
-const getLocalStorageState = () => {
-  let localStorageState = defaultState;
-  const state = localStorage.dancerphil_coder;
-  if (state) {
-    try {
-      localStorageState = JSON.parse(state);
-    } catch (e) {
-      localStorageState = defaultState;
-    }
-  }
-  return localStorageState;
-};
+import defaultState from '../util/defaultState';
+import { getLocal, setLocal } from '../util/local';
 
 class Store extends Component {
   constructor() {
@@ -73,11 +57,10 @@ class Store extends Component {
       componentLog(...arguments);
       defaultLog(...arguments);
     };
-    const localStorageState = getLocalStorageState();
-    this.setState(localStorageState);
+    this.setState(getLocal());
   }
   componentDidUpdate() {
-    localStorage.dancerphil_coder = JSON.stringify(this.state);
+    setLocal(this.state);
   }
   render() {
     return (
