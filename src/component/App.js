@@ -4,8 +4,9 @@ import FeatureList from './FeatureList';
 
 class App extends Component {
   render() {
-    const { consoleState, code, output, handleClick, handleTextChange, handleMouseDown, handleMouseMove, handleMouseUp } = this.props;
+    const { consoleState, files, active, output, handleClick, handleTextChange, handleMouseDown, handleMouseMove, handleMouseUp } = this.props;
     const { height, mouseDown } = consoleState;
+    const { code } = files[active];
     const editorStyle = { height: `calc(100vh - ${20 + height}px)`, width: '100%', background: '#272922' };
     let editor = (
       <Editor

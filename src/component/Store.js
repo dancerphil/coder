@@ -9,7 +9,8 @@ class Store extends Component {
     this.state = defaultState;
     this.handleClick = () => {
       this.state.output = '';
-      const { code } = this.state;
+      const { files, active } = this.state;
+      const { code } = files[active];
       try {
         eval(code);
       } catch (e) {
@@ -18,7 +19,9 @@ class Store extends Component {
       this.forceUpdate();
     };
     this.handleTextChange = (value) => {
-      this.setState({ code: value });
+      const { active, files } = this.state;
+      files[active].code = value;
+      this.forceUpdate();
     };
     this.handleMouseDown = (e) => {
       if (e.target.id === 'resize') {
@@ -65,14 +68,12 @@ class Store extends Component {
   render() {
     return (
       <App
-        consoleState={this.state.consoleState}
-        code={this.state.code}
-        output={this.state.output}
         handleTextChange={this.handleTextChange}
         handleClick={this.handleClick}
         handleMouseDown={this.handleMouseDown}
         handleMouseMove={this.handleMouseMove}
         handleMouseUp={this.handleMouseUp}
+        {...this.state}
       />
     );
   }
