@@ -9,7 +9,8 @@ class App extends Component {
     const { consoleState, files, active, output, handleClick, handleTextChange, handleMouseDown, handleMouseMove, handleMouseUp } = this.props;
     const { height, mouseDown } = consoleState;
     const { code } = files[active];
-    const editorStyle = { height: `calc(100vh - ${20 + height}px)`, width: '100%', background: '#272922' };
+    // Header 22px, Console 20px + height, Editor rest
+    const editorStyle = { height: `calc(100vh - ${42 + height}px)`, width: '100%', background: '#272922' };
     let editor = (
       <Editor
         style={editorStyle}
