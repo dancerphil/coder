@@ -4,16 +4,15 @@ import 'brace/mode/javascript';
 import 'brace/snippets/javascript';
 import 'brace/theme/monokai';
 import 'brace/ext/language_tools';
-// todo try move
-import 'brace/ext/searchbox';
+import { handleTextChange } from "../interface/handlers/files";
 
-const Editor = ({style, onChange, code}) => (
+const JsEditor = ({style, code}) => (
   <AceEditor
     style={style}
     mode="javascript"
     theme="monokai"
     name="coder"
-    onChange={onChange}
+    onChange={handleTextChange}
     value={code}
     fontSize={14}
     showPrintMargin
@@ -23,4 +22,4 @@ const Editor = ({style, onChange, code}) => (
   />
 )
 
-export default Editor;
+export default JsEditor;

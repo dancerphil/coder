@@ -1,21 +1,20 @@
-import React from 'react';
+import React, {Suspense, lazy} from 'react';
 import {connectWith} from 'redux-loadings'
-import Editor from './Editor';
-import { handleTextChange } from '../interface/handlers/files';
+
+const Editor = lazy(() => import('../components/JsEditor'));
 
 const EditorWrap = ({mouseDown, files, active}) => {
-  const editorStyle = { flex: 1, width: '100%', background: '#272922' };
+  const style = { flex: 1, width: '100%', background: '#272922' }
   if (mouseDown) {
-    return <div style={editorStyle} />;
+    // TODO 由于 react-ace 没有把 editor 实例给出，所以只能手动 unMount
+    return <div style={style} />;
   }
   const { code } = files[active];
 
   return (
-    <Editor
-      style={editorStyle}
-      onChange={handleTextChange}
-      code={code}
-    />
+    <Suspense fallback={<div style={style} />}>
+      <Editor style={style} code={code} />
+    </Suspense>
   );
 };
 

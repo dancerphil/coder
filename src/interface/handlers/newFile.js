@@ -18,3 +18,9 @@ export const handleSubmit = () => {
 export const handleChange = (e) => {
   set('name', e.target.value );
 }
+
+export const handleKeyDown = (e) => {
+  if (e.keyCode === 13) { // Enter
+    handleSubmit();
+  }
+}
