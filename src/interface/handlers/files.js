@@ -1,4 +1,5 @@
 import { set, getResults } from 'redux-loadings';
+import { getFileType } from "../../util/util";
 
 export const handleTextChange = (value) => {
   const [files, active] = getResults(['files', 'active']);
@@ -8,8 +9,9 @@ export const handleTextChange = (value) => {
 
 export const handleFileNew = (name) => {
   const files = getResults('files');
-
+  const type = getFileType(name);
   files.push({
+    type,
     name,
     code: '',
   });

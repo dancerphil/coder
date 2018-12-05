@@ -1,5 +1,7 @@
-import { getResults, set } from "redux-loadings";
+import { getResults, set, setConfig } from "redux-loadings";
 import { getLocal } from "./local";
+
+setConfig({enableLog:false})
 
 const defaultLog = console.log;
 const componentLog = function componentLog() {

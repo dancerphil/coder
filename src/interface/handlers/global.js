@@ -4,11 +4,15 @@ import { set, getResults } from 'redux-loadings';
 export const handleClick = () => {
   set('output', '');
   const [files, active] = getResults(['files', 'active']);
-  const { code } = files[active];
-  try {
-    eval(code); // eslint-disable-line no-eval
-  } catch (e) {
-    console.log(e);
+  const { type, code } = files[active];
+  if(type === 'js') {
+    try {
+      eval(code); // eslint-disable-line no-eval
+    } catch (e) {
+      console.log(e);
+    }
+  } else {
+    console.log('no log for '+type);
   }
 };
 
